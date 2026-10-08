@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens (based on the "Obsidian Tracker" palette from the Stitch mockups).
+ * Every token becomes a Tailwind utility: bg-surface, text-muted, border-line, text-accent...
+ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, sans-serif;
+
+  /* Surfaces, from the page background up to popovers */
+  --color-canvas: #0a0d14;
+  --color-surface: #121620;
+  --color-raised: #1a202c;
+  --color-overlay: #222b3d;
+  --color-line: #283042;
+  --color-line-subtle: #1c2333;
+
+  /* Text */
+  --color-ink: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-faint: #64748b;
+
+  /* Accents */
+  --color-accent: #10b981;
+  --color-accent-hover: #34d399;
+  --color-info: #06b6d4;
+  --color-star: #f59e0b;
+  --color-danger: #ef4444;
+
+  --radius-card: 1rem;
+  --radius-hero: 1.5rem;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-muted antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+  }
+}
