@@ -11,6 +11,18 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/auth/LoginView.vue'),
+      meta: { guestOnly: true },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/auth/RegisterView.vue'),
+      meta: { guestOnly: true },
+    },
+    {
       path: '/:pathMatch(.*)*', // catch-all: any unknown URL
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),
