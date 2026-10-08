@@ -48,3 +48,24 @@
     @apply font-display text-ink;
   }
 }
+
+/* Reusable building blocks, so buttons look the same on every page (Tailwind v4 custom utilities) */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+@utility btn-primary {
+  @apply btn bg-accent font-bold text-canvas hover:bg-accent-hover hover:shadow-[0_0_14px_rgb(16_185_129/0.4)];
+}
+
+@utility btn-secondary {
+  @apply btn border border-line bg-raised text-ink hover:border-info hover:text-info;
+}
+
+@utility btn-ghost {
+  @apply btn text-muted hover:bg-raised hover:text-ink;
+}
+
+@utility menu-item {
+  @apply flex items-center gap-3 px-3 py-2 text-left text-sm transition hover:bg-overlay hover:text-ink;
+}
