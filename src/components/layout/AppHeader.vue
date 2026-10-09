@@ -17,7 +17,6 @@ const { isOpen: isUserMenuOpen, toggle: toggleUserMenu, close: closeUserMenu } =
 const userMenu = ref(null)
 useClickOutside(userMenu, closeUserMenu)
 
-// Any navigation closes the open menus
 watch(
   () => route.fullPath,
   () => {

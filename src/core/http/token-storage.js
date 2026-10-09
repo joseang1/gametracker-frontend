@@ -1,4 +1,3 @@
-// The JWT is kept in localStorage so the session survives a page reload
 const TOKEN_KEY = 'gametracker.token'
 
 export const tokenStorage = {

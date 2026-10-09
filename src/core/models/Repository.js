@@ -1,9 +1,5 @@
 import httpClient from '@/core/http/http-client'
 
-/**
- * Base class for every API repository: knows its resource path (e.g. '/auth')
- * and returns only the response body. Errors arrive already converted to ApiError.
- */
 export default class Repository {
   constructor(uri, client = httpClient) {
     this.uri = uri

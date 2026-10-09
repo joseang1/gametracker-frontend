@@ -1,14 +1,9 @@
 @import 'tailwindcss';
 
-/*
- * Design tokens (based on the "Obsidian Tracker" palette from the Stitch mockups).
- * Every token becomes a Tailwind utility: bg-surface, text-muted, border-line, text-accent...
- */
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, sans-serif;
 
-  /* Surfaces, from the page background up to popovers */
   --color-canvas: #0a0d14;
   --color-surface: #121620;
   --color-raised: #1a202c;
@@ -16,12 +11,10 @@
   --color-line: #283042;
   --color-line-subtle: #1c2333;
 
-  /* Text */
   --color-ink: #f8fafc;
   --color-muted: #94a3b8;
   --color-faint: #64748b;
 
-  /* Accents */
   --color-accent: #10b981;
   --color-accent-hover: #34d399;
   --color-info: #06b6d4;
@@ -49,7 +42,6 @@
   }
 }
 
-/* Reusable building blocks, so buttons look the same on every page (Tailwind v4 custom utilities) */
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60;
 }

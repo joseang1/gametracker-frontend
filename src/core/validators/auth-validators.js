@@ -1,8 +1,3 @@
-/*
- * Same rules and messages as the backend DTOs (LoginDTORequest, RegisterDTORequest),
- * so the user gets feedback before sending. The backend still validates everything.
- * Each function returns { field: message } with only the invalid fields.
- */
 const USERNAME_PATTERN = /^[a-zA-Z0-9_]+$/
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 

@@ -1,7 +1,3 @@
-/**
- * Same shape as the backend ErrorDTOResponse: { status, message, errors }.
- * errors holds one message per invalid field (e.g. { username: 'Username cannot be empty' }).
- */
 export default class ApiError extends Error {
   constructor(status, message, errors = {}) {
     super(message)

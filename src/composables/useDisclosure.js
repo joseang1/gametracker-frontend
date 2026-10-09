@@ -1,9 +1,5 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 
-/**
- * Open/close state for menus, dropdowns and modals.
- * Pressing Escape closes it, as users expect from any popup.
- */
 export function useDisclosure(initial = false) {
   const isOpen = ref(initial)
 

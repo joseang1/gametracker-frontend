@@ -23,12 +23,11 @@ const router = createRouter({
       meta: { guestOnly: true },
     },
     {
-      path: '/:pathMatch(.*)*', // catch-all: any unknown URL
+      path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),
     },
   ],
-  // Start each new page at the top
   scrollBehavior: (to, from, savedPosition) => savedPosition ?? { top: 0 },
 })
 

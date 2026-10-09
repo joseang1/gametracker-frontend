@@ -19,7 +19,6 @@ async function createAccount() {
   try {
     await auth.register(form.username.trim(), form.email.trim(), form.password)
   } catch (exception) {
-    // 409: "Username '...' is already taken" or "Email is already registered" -> show it under that field
     if (exception.status === 409) {
       const field = exception.message.startsWith('Email') ? 'email' : 'username'
       throw new ApiError(409, exception.message, { [field]: exception.message })

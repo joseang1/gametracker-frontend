@@ -9,7 +9,6 @@ const props = defineProps({
 
 const sizes = { sm: 'size-8 text-xs', md: 'size-10 text-sm', lg: 'size-20 text-2xl' }
 
-// Without a picture, show the initials on a colour that is always the same for the same user
 const palettes = ['bg-accent/15 text-accent', 'bg-info/15 text-info', 'bg-star/15 text-star']
 
 const initials = computed(() => props.username.slice(0, 2).toUpperCase())

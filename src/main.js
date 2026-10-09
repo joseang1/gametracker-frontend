@@ -17,7 +17,6 @@ app.provide('AuthService', new AuthService(new AuthRepository()))
 
 const authStore = useAuthStore()
 
-// The backend rejected our token (expired or banned): end the session
 setUnauthorizedHandler(() => {
   authStore.logout()
   const current = router.currentRoute.value
@@ -25,7 +24,6 @@ setUnauthorizedHandler(() => {
     router.push({ name: 'login', query: { redirect: current.fullPath } })
 })
 
-// Restore the session before the first navigation so guards know who is logged in
 await authStore.restoreSession()
 
 app.use(router)

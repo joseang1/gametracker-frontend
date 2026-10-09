@@ -1,11 +1,5 @@
 import { useAuthStore } from '@/stores/auth'
 
-/**
- * Route meta flags:
- * - requiresAuth: only for logged users (others go to login and come back afterwards)
- * - requiresAdmin: only for admins
- * - guestOnly: login/register, pointless once logged in
- */
 export const guard = (to) => {
   const store = useAuthStore()
   const toLogin = { name: 'login', query: { redirect: to.fullPath } }

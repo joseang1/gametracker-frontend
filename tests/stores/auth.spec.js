@@ -9,7 +9,6 @@ describe('auth store', () => {
   const admin = new UserModel(1, 'admin', 'ADMIN', null)
   let authService
 
-  // The store injects AuthService, so it needs an app that provides it
   const createStore = () => {
     const app = createApp({})
     app.provide('AuthService', authService)

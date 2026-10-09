@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from 'vue'
 
-// Small stroke icons drawn on a 24x24 grid; color comes from the text color (currentColor)
 const paths = {
   menu: ['M4 7h16', 'M4 12h16', 'M4 17h16'],
   close: ['M6 6l12 12', 'M18 6L6 18'],

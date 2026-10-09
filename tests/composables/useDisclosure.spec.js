@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { useDisclosure } from '@/composables/useDisclosure'
 
-// Composables with lifecycle hooks need a component to run inside
 const withSetup = (composable) => {
   let result
   const wrapper = mount({
