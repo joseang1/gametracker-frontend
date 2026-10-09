@@ -15,7 +15,6 @@ const year = new Date().getFullYear()
         GameTracker
       </RouterLink>
 
-      <!-- RAWG asks every app using its API to credit it with a link -->
       <p class="text-faint">
         Game data provided by
         <a href="https://rawg.io" target="_blank" rel="noopener" class="font-medium text-muted underline-offset-4 hover:text-ink hover:underline">

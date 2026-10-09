@@ -8,7 +8,6 @@ export default class AuthService {
     this.#repo = repository
   }
 
-  // Both return { token, user } so the store can start the session
   async login(username, password) {
     const data = await this.#repo.post('/login', { username, password })
     return this.#toSession(data)

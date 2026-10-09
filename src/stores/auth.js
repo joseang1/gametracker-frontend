@@ -31,7 +31,6 @@ export const useAuthStore = defineStore('auth', () => {
     tokenStorage.clear()
   }
 
-  // On page load: if a token was saved, ask the backend who we are (it may have expired)
   async function restoreSession() {
     if (!token.value) return
 

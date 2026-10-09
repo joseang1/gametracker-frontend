@@ -10,7 +10,6 @@ defineProps({
 
 <template>
   <section class="relative isolate flex justify-center px-4 py-16 sm:py-24">
-    <!-- soft emerald glow behind the card -->
     <div
       class="absolute top-10 left-1/2 -z-10 size-96 -translate-x-1/2 rounded-full bg-accent/10 blur-3xl"
       aria-hidden="true"

@@ -12,10 +12,6 @@ export function attachToken(config) {
   return config
 }
 
-/*
- * Called when the backend rejects our token with a 401: it expired, the user was banned
- * or deleted. A 403 is not handled here: it only means "not allowed" (e.g. not an admin).
- */
 let onUnauthorized = () => {}
 
 export function setUnauthorizedHandler(handler) {

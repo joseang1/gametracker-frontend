@@ -20,7 +20,6 @@ describe('AppHeader', () => {
       global: { plugins: [pinia, router], provide: { AuthService: {} } },
     })
 
-    // Getters are writable with the testing pinia, so we can fake who is logged in
     const auth = useAuthStore()
     if (role !== 'guest') {
       auth.user = new UserModel(1, 'demo', role === 'admin' ? 'ADMIN' : 'USER', null)
