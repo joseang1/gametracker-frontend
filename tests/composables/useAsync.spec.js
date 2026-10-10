@@ -1,4 +1,5 @@
 import { useAsync } from '@/composables/useAsync'
+import ApiError from '@/core/http/ApiError'
 
 describe('useAsync', () => {
   it('starts with the initial value and not loading', () => {
@@ -55,5 +56,13 @@ describe('useAsync', () => {
 
     expect(error.value).toBe('')
     expect(data.value).toBe('ok')
+  })
+
+  it('remembers the HTTP status of the error', async () => {
+    const { errorStatus, run } = useAsync(() => Promise.reject(new ApiError(404, 'Game not found')))
+
+    await run()
+
+    expect(errorStatus.value).toBe(404)
   })
 })
