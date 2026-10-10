@@ -3,6 +3,7 @@ import { inject, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGameSearch } from '@/composables/useGameSearch'
 import GameCard from '@/components/games/GameCard.vue'
+import GameCardSkeleton from '@/components/games/GameCardSkeleton.vue'
 import AppPagination from '@/components/ui/AppPagination.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 
@@ -60,11 +61,7 @@ onMounted(load)
       aria-busy="true"
       data-test="loading"
     >
-      <div v-for="n in 12" :key="n" class="animate-pulse">
-        <div class="aspect-[2/3] rounded-lg bg-raised" />
-        <div class="mt-2.5 h-3.5 w-4/5 rounded bg-raised" />
-        <div class="mt-1.5 h-3 w-1/2 rounded bg-raised" />
-      </div>
+      <GameCardSkeleton v-for="n in 12" :key="n" />
     </div>
 
     <div v-else-if="error" class="flex flex-col items-center gap-4 py-20 text-center" role="alert" data-test="error">
