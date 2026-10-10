@@ -1,5 +1,6 @@
-import { gameSummaryMapper } from '@/core/mappers/game-mapper'
+import { gameDetailMapper, gameSummaryMapper } from '@/core/mappers/game-mapper'
 import GameModel from '@/core/models/GameModel'
+import GameDetailModel from '@/core/models/GameDetailModel'
 
 export default class GameService {
   #repo
@@ -22,5 +23,15 @@ export default class GameService {
   async getTrending() {
     const data = await this.#repo.get('/trending')
     return data.map((dto) => GameModel.createGame(dto, gameSummaryMapper))
+  }
+
+  async getById(id) {
+    const data = await this.#repo.get(`/${id}`)
+    return GameDetailModel.createGameDetail(data, gameDetailMapper)
+  }
+
+  async getByRawgId(rawgId) {
+    const data = await this.#repo.get(`/rawg/${rawgId}`)
+    return GameDetailModel.createGameDetail(data, gameDetailMapper)
   }
 }
