@@ -64,4 +64,11 @@ describe('ReviewService', () => {
 
     expect(review.wasEdited()).toBe(true)
   })
+
+  it('gets the reviews of one game page by page', async () => {
+    const result = await service.getByGame(7, 2)
+
+    expect(repository.get).toHaveBeenCalledWith('/games/7/reviews', { page: 2 })
+    expect(result.reviews[0].author.username).toBe('demo')
+  })
 })

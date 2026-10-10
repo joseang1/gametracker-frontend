@@ -28,6 +28,16 @@ const router = createRouter({
       component: () => import('@/views/ExploreView.vue'),
     },
     {
+      path: '/games/:id(\\d+)',
+      name: 'game',
+      component: () => import('@/views/GameDetailView.vue'),
+    },
+    {
+      path: '/games/rawg/:rawgId(\\d+)',
+      name: 'game-rawg',
+      component: () => import('@/views/GameDetailView.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),
