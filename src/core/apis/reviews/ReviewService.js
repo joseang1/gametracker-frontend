@@ -13,6 +13,11 @@ export default class ReviewService {
     return this.#toPage(data)
   }
 
+  async getByGame(gameId, page = 0) {
+    const data = await this.#repo.get(`/games/${gameId}/reviews`, { page })
+    return this.#toPage(data)
+  }
+
   #toPage(data) {
     return {
       reviews: data.content.map((dto) => ReviewModel.createReview(dto, reviewMapper)),
