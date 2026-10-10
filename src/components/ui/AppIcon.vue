@@ -22,6 +22,8 @@ const paths = {
   search: ['M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z', 'M20 20l-4-4'],
   'chevron-left': ['M15 6l-6 6 6 6'],
   'chevron-right': ['M9 6l6 6-6 6'],
+  'chevrons-left': ['M11 17l-5-5 5-5', 'M18 17l-5-5 5-5'],
+  'chevrons-right': ['M6 17l5-5-5-5', 'M13 17l5-5-5-5'],
 }
 
 const props = defineProps({

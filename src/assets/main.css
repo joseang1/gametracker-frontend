@@ -58,6 +58,10 @@
   @apply btn text-muted hover:bg-raised hover:text-ink;
 }
 
+@utility page-button {
+  @apply inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-line bg-surface px-2.5 text-sm font-semibold text-muted tabular-nums transition hover:border-accent/50 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line disabled:hover:text-muted aria-[current=page]:border-accent aria-[current=page]:bg-accent/15 aria-[current=page]:text-accent;
+}
+
 @utility menu-item {
   @apply flex items-center gap-3 px-3 py-2 text-left text-sm transition hover:bg-overlay hover:text-ink;
 }
