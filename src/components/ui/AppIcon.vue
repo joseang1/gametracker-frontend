@@ -24,6 +24,9 @@ const paths = {
   'chevron-right': ['M9 6l6 6-6 6'],
   'chevrons-left': ['M11 17l-5-5 5-5', 'M18 17l-5-5 5-5'],
   'chevrons-right': ['M6 17l5-5-5-5', 'M13 17l5-5-5-5'],
+  heart: ['M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z'],
+  pencil: ['M4 20h4L19 9l-4-4L4 16v4z', 'M14 6l4 4'],
+  trash: ['M4 7h16', 'M9 7V4h6v3', 'M6 7l1 13h10l1-13'],
 }
 
 const props = defineProps({
