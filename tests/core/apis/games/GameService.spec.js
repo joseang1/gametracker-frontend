@@ -8,8 +8,14 @@ describe('GameService', () => {
   let service
 
   beforeEach(() => {
-    repository = { get: vi.fn() }
+    repository = { get: vi.fn(), delete: vi.fn().mockResolvedValue('') }
     service = new GameService(repository)
+  })
+
+  it('deletes a game', async () => {
+    await service.deleteGame(2)
+
+    expect(repository.delete).toHaveBeenCalledWith('/2')
   })
 
   describe('search', () => {
