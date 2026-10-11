@@ -72,6 +72,12 @@ describe('ReviewService', () => {
     expect(result.reviews[0].author.username).toBe('demo')
   })
 
+  it('gets the reviews written by a user', async () => {
+    await service.getByUser('demo', 1)
+
+    expect(repository.get).toHaveBeenCalledWith('/users/demo/reviews', { page: 1 })
+  })
+
   describe('saving my review', () => {
     beforeEach(() => {
       repository.put = vi.fn().mockResolvedValue(reviewDto)

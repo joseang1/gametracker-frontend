@@ -12,6 +12,20 @@ export default class GameLogService {
     this.#repo = repository
   }
 
+  async getByUser(username, { status = null, favorites = false, page = 0 } = {}) {
+    const params = { page }
+    if (status) params.status = status
+    if (favorites) params.favorites = true
+
+    const data = await this.#repo.get(`/users/${encodeURIComponent(username)}/logs`, params)
+    return {
+      logs: data.content.map((dto) => GameLogModel.createGameLog(dto, gameLogMapper)),
+      page: data.page,
+      totalPages: data.totalPages,
+      totalElements: data.totalElements,
+    }
+  }
+
   async getMyEntry(gameId) {
     const data = await this.#repo.get(`/games/${gameId}/me`)
     return {

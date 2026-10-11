@@ -18,6 +18,11 @@ export default class ReviewService {
     return this.#toPage(data)
   }
 
+  async getByUser(username, page = 0) {
+    const data = await this.#repo.get(`/users/${encodeURIComponent(username)}/reviews`, { page })
+    return this.#toPage(data)
+  }
+
   async saveReview(gameId, { rating, body, spoiler }) {
     const data = await this.#repo.put(`/games/${gameId}/review`, {
       rating,

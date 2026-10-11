@@ -80,4 +80,24 @@ describe('GameLogService', () => {
 
     expect(repository.delete).toHaveBeenCalledWith('/games/2/log')
   })
+
+  describe('a user library', () => {
+    beforeEach(() => {
+      repository.get.mockResolvedValue({ content: [logDto], page: 0, size: 24, totalElements: 1, totalPages: 1 })
+    })
+
+    it('gets the whole library by default', async () => {
+      const library = await service.getByUser('demo')
+
+      expect(repository.get).toHaveBeenCalledWith('/users/demo/logs', { page: 0 })
+      expect(library.logs[0]).toBeInstanceOf(GameLogModel)
+      expect(library.totalElements).toBe(1)
+    })
+
+    it('filters by status and favourites', async () => {
+      await service.getByUser('demo', { status: 'PLAYING', favorites: true, page: 2 })
+
+      expect(repository.get).toHaveBeenCalledWith('/users/demo/logs', { page: 2, status: 'PLAYING', favorites: true })
+    })
+  })
 })
