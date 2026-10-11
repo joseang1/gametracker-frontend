@@ -48,10 +48,11 @@ describe('GameDetailView', () => {
   let reviewService
   let gameLogService
 
-  const mountDetail = async (path, { loggedIn = false } = {}) => {
+  const mountDetail = async (path, { loggedIn = false, admin = false } = {}) => {
     const router = createRouter({
       history: createMemoryHistory(),
       routes: [
+        { path: '/games', name: 'explore', component: { template: '<div />' } },
         { path: '/games/:id(\\d+)', name: 'game', component: GameDetailView },
         { path: '/games/rawg/:rawgId(\\d+)', name: 'game-rawg', component: GameDetailView },
         { path: '/login', name: 'login', component: { template: '<div />' } },
@@ -75,14 +76,37 @@ describe('GameDetailView', () => {
       },
       attachTo: document.body,
     })
-    if (loggedIn) {
+    if (loggedIn || admin) {
       const auth = useAuthStore()
-      auth.user = new UserModel(1, 'demo', 'USER', null)
+      auth.user = new UserModel(1, admin ? 'admin' : 'demo', admin ? 'ADMIN' : 'USER', null)
       auth.isAuthenticated = true
+      auth.isAdmin = admin
     }
     await flushPromises()
     return { wrapper, router }
   }
+
+  describe('admin tools', () => {
+    it('are hidden from normal users', async () => {
+      const { wrapper } = await mountDetail('/games/2', { loggedIn: true })
+
+      expect(wrapper.find('[data-test="admin-tools"]').exists()).toBe(false)
+    })
+
+    it('let admins delete the game after confirming', async () => {
+      gameService.deleteGame = vi.fn().mockResolvedValue('')
+      const { wrapper, router } = await mountDetail('/games/2', { admin: true })
+      const button = wrapper.find('[data-test="delete-game"]')
+
+      await button.trigger('click')
+      expect(gameService.deleteGame).not.toHaveBeenCalled()
+      await button.trigger('click')
+      await flushPromises()
+
+      expect(gameService.deleteGame).toHaveBeenCalledWith(2)
+      expect(router.currentRoute.value.path).toBe('/games')
+    })
+  })
 
   beforeEach(() => {
     gameService = { getById: vi.fn().mockResolvedValue(detail()), getByRawgId: vi.fn().mockResolvedValue(detail()) }
