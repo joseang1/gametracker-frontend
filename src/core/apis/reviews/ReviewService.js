@@ -18,6 +18,19 @@ export default class ReviewService {
     return this.#toPage(data)
   }
 
+  async saveReview(gameId, { rating, body, spoiler }) {
+    const data = await this.#repo.put(`/games/${gameId}/review`, {
+      rating,
+      body: body?.trim() || null,
+      spoiler: Boolean(spoiler),
+    })
+    return ReviewModel.createReview(data, reviewMapper)
+  }
+
+  deleteReview(gameId) {
+    return this.#repo.delete(`/games/${gameId}/review`)
+  }
+
   #toPage(data) {
     return {
       reviews: data.content.map((dto) => ReviewModel.createReview(dto, reviewMapper)),

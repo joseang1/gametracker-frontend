@@ -71,4 +71,30 @@ describe('ReviewService', () => {
     expect(repository.get).toHaveBeenCalledWith('/games/7/reviews', { page: 2 })
     expect(result.reviews[0].author.username).toBe('demo')
   })
+
+  describe('saving my review', () => {
+    beforeEach(() => {
+      repository.put = vi.fn().mockResolvedValue(reviewDto)
+      repository.delete = vi.fn().mockResolvedValue('')
+    })
+
+    it('sends the rating, the trimmed text and the spoiler flag', async () => {
+      const review = await service.saveReview(7, { rating: 9, body: '  Loved it  ', spoiler: true })
+
+      expect(repository.put).toHaveBeenCalledWith('/games/7/review', { rating: 9, body: 'Loved it', spoiler: true })
+      expect(review).toBeInstanceOf(ReviewModel)
+    })
+
+    it('sends a rating-only review without text', async () => {
+      await service.saveReview(7, { rating: 6, body: '   ' })
+
+      expect(repository.put).toHaveBeenCalledWith('/games/7/review', { rating: 6, body: null, spoiler: false })
+    })
+
+    it('deletes my review', async () => {
+      await service.deleteReview(7)
+
+      expect(repository.delete).toHaveBeenCalledWith('/games/7/review')
+    })
+  })
 })
