@@ -11,6 +11,7 @@ import LogGameForm from '@/components/library/LogGameForm.vue'
 import StarRating from '@/components/ui/StarRating.vue'
 import AppPagination from '@/components/ui/AppPagination.vue'
 import AppModal from '@/components/ui/AppModal.vue'
+import ConfirmButton from '@/components/ui/ConfirmButton.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 
 const gameService = inject('GameService')
@@ -74,6 +75,22 @@ watch(
 function changeReviewsPage(page) {
   reviews.run(game.data.id, page)
   reviewsSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+const isDeletingGame = ref(false)
+const deleteGameError = ref('')
+
+async function deleteGame() {
+  isDeletingGame.value = true
+  deleteGameError.value = ''
+  try {
+    await gameService.deleteGame(game.data.id)
+    router.push({ name: 'explore' })
+  } catch (exception) {
+    deleteGameError.value = exception.message
+  } finally {
+    isDeletingGame.value = false
+  }
 }
 
 async function onEntryChange(entry) {
@@ -301,6 +318,20 @@ async function onEntryChange(entry) {
             </dd>
           </div>
         </dl>
+
+        <div v-if="auth.isAdmin" class="mt-4 rounded-card border border-violet-500/25 bg-violet-500/5 p-5" data-test="admin-tools">
+          <p class="mb-3 flex items-center gap-2 text-xs font-bold tracking-wide text-violet-300 uppercase">
+            <AppIcon name="shield" :size="14" /> Admin
+          </p>
+          <ConfirmButton
+            label="Delete game"
+            confirm-label="Click again: also deletes its reviews and logs"
+            :disabled="isDeletingGame"
+            data-test="delete-game"
+            @confirm="deleteGame"
+          />
+          <p v-if="deleteGameError" class="mt-2 text-sm text-danger" role="alert">{{ deleteGameError }}</p>
+        </div>
       </aside>
     </div>
 

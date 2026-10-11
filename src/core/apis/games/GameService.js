@@ -34,4 +34,8 @@ export default class GameService {
     const data = await this.#repo.get(`/rawg/${rawgId}`)
     return GameDetailModel.createGameDetail(data, gameDetailMapper)
   }
+
+  deleteGame(id) {
+    return this.#repo.delete(`/${id}`)
+  }
 }
