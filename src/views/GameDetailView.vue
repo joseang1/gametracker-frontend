@@ -5,13 +5,17 @@ import { useAuthStore } from '@/stores/auth'
 import { useAsync } from '@/composables/useAsync'
 import { formatReleaseDate } from '@/core/formatters/release-date'
 import RatingHistogram from '@/components/games/RatingHistogram.vue'
+import StatusBadge from '@/components/games/StatusBadge.vue'
 import ReviewCard from '@/components/reviews/ReviewCard.vue'
+import LogGameForm from '@/components/library/LogGameForm.vue'
 import StarRating from '@/components/ui/StarRating.vue'
 import AppPagination from '@/components/ui/AppPagination.vue'
+import AppModal from '@/components/ui/AppModal.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
 
 const gameService = inject('GameService')
 const reviewService = inject('ReviewService')
+const gameLogService = inject('GameLogService')
 const auth = useAuthStore()
 const route = useRoute()
 const router = useRouter()
@@ -46,6 +50,11 @@ watch(
   { immediate: true },
 )
 
+const EMPTY_ENTRY = { log: null, review: null }
+const myEntry = reactive(useAsync((gameId) => gameLogService.getMyEntry(gameId), EMPTY_ENTRY))
+const hasEntry = computed(() => Boolean(myEntry.data.log || myEntry.data.review))
+const isLogOpen = ref(false)
+
 watch(
   () => game.data?.id,
   (id) => {
@@ -53,9 +62,25 @@ watch(
   },
 )
 
+watch(
+  () => [game.data?.id, auth.isAuthenticated],
+  ([id, isAuthenticated]) => {
+    myEntry.data = EMPTY_ENTRY
+    if (id && isAuthenticated) myEntry.run(id)
+  },
+  { immediate: true },
+)
+
 function changeReviewsPage(page) {
   reviews.run(game.data.id, page)
   reviewsSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+async function onEntryChange(entry) {
+  myEntry.data = entry
+  isLogOpen.value = false
+  await game.run()
+  reviews.run(game.data.id, 0)
 }
 </script>
 
@@ -150,7 +175,7 @@ function changeReviewsPage(page) {
               </template>
               <p v-else class="mt-2 text-sm">Not rated yet</p>
             </div>
-            <RatingHistogram :stats="game.data.stats" class="self-end" />
+            <RatingHistogram :stats="game.data.stats" :highlight="myEntry.data.review?.rating ?? null" class="self-end" />
           </div>
 
           <RouterLink
@@ -161,6 +186,39 @@ function changeReviewsPage(page) {
           >
             Log in to log, rate and review
           </RouterLink>
+
+          <div
+            v-else-if="hasEntry"
+            class="flex max-w-xl flex-wrap items-center gap-x-4 gap-y-3 rounded-card border border-accent/20 bg-accent/5 px-5 py-4"
+            data-test="my-entry"
+          >
+            <p class="text-xs font-bold tracking-wide text-faint uppercase">Your entry</p>
+            <StatusBadge v-if="myEntry.data.log" :status="myEntry.data.log.status" />
+            <AppIcon
+              v-if="myEntry.data.log?.favorite"
+              name="heart"
+              :size="18"
+              filled
+              class="text-red-400"
+              aria-label="Favourite"
+              role="img"
+            />
+            <StarRating v-if="myEntry.data.review" :value="myEntry.data.review.getStars()" :size="16" />
+            <button type="button" class="btn-secondary ml-auto" data-test="edit-entry" @click="isLogOpen = true">
+              <AppIcon name="pencil" :size="16" /> Edit
+            </button>
+          </div>
+
+          <button
+            v-else
+            type="button"
+            class="btn-primary self-start px-5 py-3"
+            :disabled="myEntry.isLoading"
+            data-test="log-cta"
+            @click="isLogOpen = true"
+          >
+            Log, rate or review
+          </button>
         </div>
       </div>
     </header>
@@ -245,5 +303,9 @@ function changeReviewsPage(page) {
         </dl>
       </aside>
     </div>
+
+    <AppModal :open="isLogOpen" :title="game.data.title" size="lg" @close="isLogOpen = false">
+      <LogGameForm :game="game.data" :entry="myEntry.data" @change="onEntryChange" @cancel="isLogOpen = false" />
+    </AppModal>
   </article>
 </template>

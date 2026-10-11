@@ -11,6 +11,8 @@ import GameService from './core/apis/games/GameService'
 import GameRepository from './core/apis/games/GameRepository'
 import ReviewService from './core/apis/reviews/ReviewService'
 import ReviewRepository from './core/apis/reviews/ReviewRepository'
+import GameLogService from './core/apis/game-logs/GameLogService'
+import GameLogRepository from './core/apis/game-logs/GameLogRepository'
 import { setUnauthorizedHandler } from './core/http/http-client'
 import { useAuthStore } from './stores/auth'
 
@@ -20,6 +22,7 @@ app.use(createPinia())
 app.provide('AuthService', new AuthService(new AuthRepository()))
 app.provide('GameService', new GameService(new GameRepository()))
 app.provide('ReviewService', new ReviewService(new ReviewRepository()))
+app.provide('GameLogService', new GameLogService(new GameLogRepository()))
 
 const authStore = useAuthStore()
 

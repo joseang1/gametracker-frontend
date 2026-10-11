@@ -6,8 +6,10 @@ import { useAuthStore } from '@/stores/auth'
 import GameDetailModel from '@/core/models/GameDetailModel'
 import ReviewModel from '@/core/models/ReviewModel'
 import UserModel from '@/core/models/UserModel'
+import GameLogModel from '@/core/models/GameLogModel'
 import ApiError from '@/core/http/ApiError'
 import { gameDetailMapper } from '@/core/mappers/game-mapper'
+import { gameLogMapper } from '@/core/mappers/game-log-mapper'
 import { reviewMapper } from '@/core/mappers/review-mapper'
 
 describe('GameDetailView', () => {
@@ -44,6 +46,7 @@ describe('GameDetailView', () => {
 
   let gameService
   let reviewService
+  let gameLogService
 
   const mountDetail = async (path, { loggedIn = false } = {}) => {
     const router = createRouter({
@@ -62,8 +65,15 @@ describe('GameDetailView', () => {
     const wrapper = mount(GameDetailView, {
       global: {
         plugins: [pinia, router],
-        provide: { GameService: gameService, ReviewService: reviewService, AuthService: {} },
+        provide: {
+          GameService: gameService,
+          ReviewService: reviewService,
+          GameLogService: gameLogService,
+          AuthService: {},
+        },
+        stubs: { teleport: true },
       },
+      attachTo: document.body,
     })
     if (loggedIn) {
       const auth = useAuthStore()
@@ -77,6 +87,86 @@ describe('GameDetailView', () => {
   beforeEach(() => {
     gameService = { getById: vi.fn().mockResolvedValue(detail()), getByRawgId: vi.fn().mockResolvedValue(detail()) }
     reviewService = { getByGame: vi.fn().mockResolvedValue({ reviews: [review(1), review(2)], page: 0, totalPages: 1 }) }
+    gameLogService = { getMyEntry: vi.fn().mockResolvedValue({ log: null, review: null }) }
+  })
+
+  afterEach(() => {
+    document.body.innerHTML = ''
+    document.body.style.overflow = ''
+  })
+
+  describe('my entry', () => {
+    const myLog = GameLogModel.createGameLog(
+      { id: 4, status: 'COMPLETED', favorite: true, game: { id: 2, rawgId: 274755, title: 'Hades', genres: [] } },
+      gameLogMapper,
+    )
+    const myReview = ReviewModel.createReview(
+      {
+        id: 9,
+        rating: 8,
+        body: 'Mine',
+        createdAt: '2026-10-11T10:00:00',
+        author: { id: 1, username: 'demo' },
+        game: { id: 2, rawgId: 274755, title: 'Hades', genres: [] },
+      },
+      reviewMapper,
+    )
+
+    it('does not ask guests for their entry', async () => {
+      await mountDetail('/games/2')
+
+      expect(gameLogService.getMyEntry).not.toHaveBeenCalled()
+    })
+
+    it('offers to log a game the user has not logged yet', async () => {
+      const { wrapper } = await mountDetail('/games/2', { loggedIn: true })
+
+      expect(gameLogService.getMyEntry).toHaveBeenCalledWith(2)
+      expect(wrapper.find('[data-test="log-cta"]').text()).toBe('Log, rate or review')
+      expect(wrapper.find('[data-test="login-cta"]').exists()).toBe(false)
+    })
+
+    it('shows what the user already logged and rated', async () => {
+      gameLogService.getMyEntry.mockResolvedValue({ log: myLog, review: myReview })
+      const { wrapper } = await mountDetail('/games/2', { loggedIn: true })
+
+      const entry = wrapper.find('[data-test="my-entry"]')
+      expect(entry.text()).toContain('Completed')
+      expect(entry.find('[aria-label="Favourite"]').exists()).toBe(true)
+      expect(entry.find('[aria-label="Rated 4 out of 5"]').exists()).toBe(true)
+    })
+
+    it('highlights my rating in the histogram', async () => {
+      gameLogService.getMyEntry.mockResolvedValue({ log: null, review: myReview })
+      const { wrapper } = await mountDetail('/games/2', { loggedIn: true })
+
+      const fills = wrapper.findAll('[data-test="bar-fill"]')
+      expect(fills[7].classes()).toContain('bg-accent')
+    })
+
+    it('opens the form in a modal', async () => {
+      const { wrapper } = await mountDetail('/games/2', { loggedIn: true })
+
+      await wrapper.find('[data-test="log-cta"]').trigger('click')
+
+      expect(wrapper.find('[role="dialog"]').exists()).toBe(true)
+      expect(wrapper.find('[data-test="statuses"]').exists()).toBe(true)
+    })
+
+    it('refreshes the rating and the reviews after saving', async () => {
+      const { wrapper } = await mountDetail('/games/2', { loggedIn: true })
+      await wrapper.find('[data-test="log-cta"]').trigger('click')
+      gameService.getById.mockClear()
+      reviewService.getByGame.mockClear()
+
+      wrapper.findComponent({ name: 'LogGameForm' }).vm.$emit('change', { log: myLog, review: myReview })
+      await flushPromises()
+
+      expect(wrapper.find('[role="dialog"]').exists()).toBe(false)
+      expect(gameService.getById).toHaveBeenCalledWith('2')
+      expect(reviewService.getByGame).toHaveBeenCalledWith(2, 0)
+      expect(wrapper.find('[data-test="my-entry"]').exists()).toBe(true)
+    })
   })
 
   it('shows the game information', async () => {
