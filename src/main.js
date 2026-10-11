@@ -15,6 +15,8 @@ import GameLogService from './core/apis/game-logs/GameLogService'
 import GameLogRepository from './core/apis/game-logs/GameLogRepository'
 import UserService from './core/apis/users/UserService'
 import UserRepository from './core/apis/users/UserRepository'
+import AdminService from './core/apis/admin/AdminService'
+import AdminRepository from './core/apis/admin/AdminRepository'
 import { setUnauthorizedHandler } from './core/http/http-client'
 import { useAuthStore } from './stores/auth'
 
@@ -26,6 +28,7 @@ app.provide('GameService', new GameService(new GameRepository()))
 app.provide('ReviewService', new ReviewService(new ReviewRepository()))
 app.provide('GameLogService', new GameLogService(new GameLogRepository()))
 app.provide('UserService', new UserService(new UserRepository()))
+app.provide('AdminService', new AdminService(new AdminRepository()))
 
 const authStore = useAuthStore()
 
