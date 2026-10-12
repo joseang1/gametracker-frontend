@@ -1,87 +1,87 @@
 # GameTracker · Frontend
 
-Web app for **GameTracker**, a Letterboxd-style diary for video games: log the games you play, rate them with half stars, write reviews and follow what the community is playing.
+Aplicación web de **GameTracker**, un diario de videojuegos al estilo de Letterboxd: registra los juegos a los que juegas, puntúalos con medias estrellas, escribe reseñas y descubre a qué está jugando la comunidad.
 
-Built with **Vue 3**, **Pinia**, **Vue Router** and **Tailwind CSS**, tested with **Vitest**. It talks to the [GameTracker REST API](https://github.com/joseang1/gametracker-backend).
+Construida con **Vue 3**, **Pinia**, **Vue Router** y **Tailwind CSS**, testeada con **Vitest**. Se comunica con la [API REST de GameTracker](https://github.com/joseang1/gametracker-backend).
 
 | | |
 |---|---|
-| Backend repository | [joseang1/gametracker-backend](https://github.com/joseang1/gametracker-backend) |
-| Presentation | _link added before submission_ |
-| Design | Figma mockups: _link added before submission_ |
+| Repositorio del backend | [joseang1/gametracker-backend](https://github.com/joseang1/gametracker-backend) |
+| Presentación | _enlace pendiente de añadir antes de la entrega_ |
+| Diseño | Maquetas en Figma: _enlace pendiente de añadir antes de la entrega_ |
 
-![Landing page](docs/screenshots/home.png)
+![Página de inicio](docs/screenshots/home.png)
 
 ---
 
-## Table of contents
+## Índice
 
-1. [Features](#features)
-2. [Screenshots](#screenshots)
-3. [Tech stack](#tech-stack)
-4. [Getting started](#getting-started)
-5. [Architecture](#architecture)
+1. [Funcionalidades](#funcionalidades)
+2. [Capturas de pantalla](#capturas-de-pantalla)
+3. [Stack tecnológico](#stack-tecnológico)
+4. [Puesta en marcha](#puesta-en-marcha)
+5. [Arquitectura](#arquitectura)
 6. [Testing](#testing)
-7. [Workflow](#workflow)
+7. [Metodología de trabajo](#metodología-de-trabajo)
 
 ---
 
-## Features
+## Funcionalidades
 
-- **Landing page** with trending games, recent community reviews and clear entry points for guests.
-- **Explore** thousands of games: search as you type, numbered pagination, and the search kept in the URL so links and the Back button work.
-- **Game page** with cover, description, platforms, community rating and a rating histogram, plus paginated reviews with spoiler protection.
-- **Log, rate and review** from a modal: status (playing, completed, backlog, wishlist, dropped), platform, hours, favourite, half-star rating, review text and spoiler flag.
-- **Profiles** with stats per status, a filterable library, the user's reviews and profile editing with a live avatar preview.
-- **Admin portal**: site statistics, player search, ban and unban, review moderation and game deletion.
-- **Accounts**: register and log in with validation that mirrors the backend. The session survives reloads and ends automatically if the token expires or the user is banned.
-- **Responsive** from phones to wide screens, with keyboard and screen-reader support (labelled controls, focus handling in modals, `aria-current`, live regions).
+- **Página de inicio** con los juegos en tendencia, las últimas reseñas de la comunidad y accesos claros para los invitados.
+- **Explorar** miles de juegos: búsqueda mientras escribes, paginación numerada y la búsqueda guardada en la URL para que los enlaces y el botón Atrás funcionen.
+- **Ficha del juego** con portada, descripción, plataformas, nota de la comunidad y un histograma de puntuaciones, además de reseñas paginadas con protección de spoilers.
+- **Registrar, puntuar y reseñar** desde un modal: estado (jugando, completado, pendiente, lista de deseos, abandonado), plataforma, horas, favorito, puntuación con medias estrellas, texto de la reseña y aviso de spoilers.
+- **Perfiles** con estadísticas por estado, una biblioteca filtrable, las reseñas del usuario y edición del perfil con vista previa del avatar en tiempo real.
+- **Panel de administración**: estadísticas del sitio, búsqueda de jugadores, banear y desbanear, moderación de reseñas y borrado de juegos.
+- **Cuentas**: registro e inicio de sesión con una validación que replica la del backend. La sesión se mantiene al recargar y termina automáticamente si el token caduca o el usuario es baneado.
+- **Responsive** desde móviles hasta pantallas anchas, con soporte de teclado y lectores de pantalla (controles con etiqueta, gestión del foco en los modales, `aria-current`, regiones live).
 
-| Role | What they see |
+| Rol | Qué ve |
 |---|---|
-| Guest | Landing, Explore, game pages, reviews and profiles |
-| User | Plus logging, rating, reviewing and editing their profile |
-| Admin | Plus the admin portal and game deletion |
+| Invitado | Inicio, Explorar, fichas de juegos, reseñas y perfiles |
+| Usuario | Además, registrar, puntuar y reseñar juegos y editar su perfil |
+| Admin | Además, el panel de administración y el borrado de juegos |
 
 ---
 
-## Screenshots
+## Capturas de pantalla
 
-| Explore | Game page |
+| Explorar | Ficha del juego |
 |---|---|
-| ![Explore](docs/screenshots/explore.png) | ![Game page](docs/screenshots/game.png) |
+| ![Explorar](docs/screenshots/explore.png) | ![Ficha del juego](docs/screenshots/game.png) |
 
-| Log and review | Profile |
+| Registrar y reseñar | Perfil |
 |---|---|
-| ![Log and review modal](docs/screenshots/log-modal.png) | ![Profile](docs/screenshots/profile.png) |
+| ![Modal para registrar y reseñar](docs/screenshots/log-modal.png) | ![Perfil](docs/screenshots/profile.png) |
 
-| Admin portal | Mobile |
+| Panel de administración | Móvil |
 |---|---|
-| ![Admin portal](docs/screenshots/admin.png) | ![Mobile](docs/screenshots/mobile.png) |
+| ![Panel de administración](docs/screenshots/admin.png) | ![Móvil](docs/screenshots/mobile.png) |
 
 ---
 
-## Tech stack
+## Stack tecnológico
 
-| Area | Technology |
+| Área | Tecnología |
 |---|---|
 | Framework | Vue 3.5 (`<script setup>`, Composition API) · Vite 8 |
-| State | Pinia (setup stores) |
-| Routing | Vue Router 5 with lazy-loaded routes and navigation guards |
-| HTTP | Axios with request and response interceptors |
-| Styling | Tailwind CSS 4 with design tokens from the project's design system |
-| Tests | Vitest · Vue Test Utils · @pinia/testing · jsdom · v8 coverage |
+| Estado | Pinia (setup stores) |
+| Rutas | Vue Router 5 con rutas de carga diferida y guards de navegación |
+| HTTP | Axios con interceptores de petición y de respuesta |
+| Estilos | Tailwind CSS 4 con los tokens del sistema de diseño del proyecto |
+| Tests | Vitest · Vue Test Utils · @pinia/testing · jsdom · cobertura v8 |
 
 ---
 
-## Getting started
+## Puesta en marcha
 
-### Requirements
+### Requisitos
 
-- **Node.js 22.18+ or 24.12+**
-- The **[backend](https://github.com/joseang1/gametracker-backend)** running on `http://localhost:8080` (see its README)
+- **Node.js 22.18+ o 24.12+**
+- El **[backend](https://github.com/joseang1/gametracker-backend)** arrancado en `http://localhost:8080` (ver su README)
 
-### Install and run
+### Instalar y arrancar
 
 ```bash
 git clone https://github.com/joseang1/gametracker-frontend.git
@@ -90,79 +90,79 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173**.
+Abre **http://localhost:5173**.
 
-### Demo accounts
+### Cuentas de demostración
 
-Created by the backend on its first start:
+Las crea el backend en su primer arranque:
 
-| Username | Password | Role |
+| Usuario | Contraseña | Rol |
 |---|---|---|
 | `admin` | `admin1234` | Admin |
-| `demo` | `demo1234` | User |
+| `demo` | `demo1234` | Usuario |
 
-### Configuration
+### Configuración
 
-`.env` holds the defaults. To override them locally, create `.env.local` (ignored by git):
+`.env` contiene los valores por defecto. Para cambiarlos en local, crea un `.env.local` (ignorado por git):
 
-| Variable | Default | Purpose |
+| Variable | Valor por defecto | Para qué sirve |
 |---|---|---|
-| `VITE_APP_TITLE` | `GameTracker` | App name |
-| `VITE_APP_API_URL` | `http://localhost:8080/api/v1` | Backend base URL |
+| `VITE_APP_TITLE` | `GameTracker` | Nombre de la aplicación |
+| `VITE_APP_API_URL` | `http://localhost:8080/api/v1` | URL base del backend |
 
 ### Scripts
 
-| Command | What it does |
+| Comando | Qué hace |
 |---|---|
-| `npm run dev` | Development server with hot reload |
-| `npm run build` | Production build in `dist/` |
-| `npm run preview` | Serve the production build |
-| `npm run test:unit` | Tests in watch mode |
-| `npm run test:coverage` | All tests once, with the coverage report and thresholds |
+| `npm run dev` | Servidor de desarrollo con recarga en caliente |
+| `npm run build` | Build de producción en `dist/` |
+| `npm run preview` | Sirve el build de producción |
+| `npm run test:unit` | Tests en modo watch |
+| `npm run test:coverage` | Todos los tests una vez, con el informe de cobertura y sus umbrales |
 
 ---
 
-## Architecture
+## Arquitectura
 
 ```
 src
-├── core                 plain JavaScript, no Vue
-│   ├── http             axios client, JWT header, ApiError, token storage
-│   ├── models           Repository base class and domain models (GameModel, ReviewModel…)
-│   ├── mappers          backend DTO → model, one function per field
-│   ├── apis             one Repository + Service per resource (auth, games, reviews, game-logs, users, admin)
-│   ├── validators       form rules that mirror the backend
-│   ├── formatters       relative dates, release dates
-│   └── pagination       page window for numbered pagination
-├── composables          reusable logic: useAsync, useFormSubmit, useGameSearch, useDisclosure, useClickOutside
-├── stores               Pinia auth store
-├── router               routes, guards, safe redirects
+├── core                 JavaScript puro, sin Vue
+│   ├── http             cliente axios, cabecera JWT, ApiError, almacenamiento del token
+│   ├── models           clase base Repository y modelos del dominio (GameModel, ReviewModel…)
+│   ├── mappers          DTO del backend → modelo, una función por campo
+│   ├── apis             un Repository + Service por recurso (auth, games, reviews, game-logs, users, admin)
+│   ├── validators       reglas de formulario que replican las del backend
+│   ├── formatters       fechas relativas, fechas de lanzamiento
+│   └── pagination       ventana de páginas para la paginación numerada
+├── composables          lógica reutilizable: useAsync, useFormSubmit, useGameSearch, useDisclosure, useClickOutside
+├── stores               store de autenticación de Pinia
+├── router               rutas, guards, redirecciones seguras
 ├── components           ui · layout · games · reviews · library · profile · auth
-└── views                one per page
+└── views                una por página
 ```
 
-### Data flow
+### Flujo de datos
 
 ```mermaid
 flowchart LR
-    View[View / component] -->|inject| Service
-    View --> Composable[Composable<br/>loading, errors, debounce]
+    View[Vista / componente] -->|inject| Service
+    View --> Composable[Composable<br/>carga, errores, debounce]
     Composable --> Service
     Service --> Repository
     Repository --> Http[http-client<br/>axios + JWT + ApiError]
-    Http -->|REST| API([GameTracker API])
-    Service -->|mapper| Model[Model<br/>GameModel, ReviewModel…]
+    Http -->|REST| API([API de GameTracker])
+    Service -->|mapper| Model[Modelo<br/>GameModel, ReviewModel…]
     Model --> View
-    Store[(Pinia auth store)] --> Guard[Router guard]
+    Store[(Store de auth de Pinia)] --> Guard[Guard del router]
     Store --> View
 ```
 
-- **Services are created once in `main.js`** and given to the app with `app.provide`. Views get them with `inject`, so tests can pass fake services.
-- **Mappers and models** keep the backend's JSON shape in one place. Components only use models and their helpers, like `game.getStars()` or `game.getDetailRoute()`.
-- **Every API error becomes an `ApiError`** with `status`, `message` and per-field `errors`, so forms show backend messages under the right field.
-- **Session:** the JWT is stored in `localStorage`, attached to every request, and restored on startup. A `401` on a request that carried a token ends the session automatically.
+- **Los services se crean una sola vez en `main.js`** y se entregan a la app con `app.provide`. Las vistas los obtienen con `inject`, así que los tests pueden pasar services falsos.
+- **Los mappers y los modelos** concentran en un solo sitio la forma del JSON del backend. Los componentes solo usan modelos y sus métodos, como `game.getStars()` o `game.getDetailRoute()`.
+- **Cada error de la API se convierte en un `ApiError`** con `status`, `message` y `errors` por campo, para que los formularios muestren los mensajes del backend debajo del campo correcto.
+- **Sesión:** el JWT se guarda en `localStorage`, se añade a cada petición y se restaura al arrancar. Un `401` en una petición que llevaba token cierra la sesión automáticamente.
 
-### Core layer
+### Capa core
 
 ```mermaid
 classDiagram
@@ -224,12 +224,12 @@ classDiagram
     GameService --> GameRepository
     ReviewService --> ReviewRepository
     GameModel <|-- GameDetailModel
-    GameService ..> GameModel : creates
-    ReviewService ..> ReviewModel : creates
+    GameService ..> GameModel : crea
+    ReviewService ..> ReviewModel : crea
     ReviewModel --> GameModel
 ```
 
-Auth, game logs, users and admin follow the same Repository → Service → Model pattern.
+Auth, registros de juego, usuarios y admin siguen el mismo patrón Repository → Service → Model.
 
 ---
 
@@ -239,26 +239,26 @@ Auth, game logs, users and admin follow the same Repository → Service → Mode
 npm run test:coverage
 ```
 
-**317 tests** in 47 files, with **96% line coverage**. The run fails if coverage drops below the thresholds in `vitest.config.js` (90% lines, 85% branches).
+**317 tests** en 47 archivos, con un **96 % de cobertura de líneas**. La ejecución falla si la cobertura baja de los umbrales de `vitest.config.js` (90 % de líneas, 85 % de ramas).
 
-Tests live in `tests/`, mirroring `src/`:
+Los tests están en `tests/`, con la misma estructura que `src/`:
 
-| What | Examples |
+| Qué | Ejemplos |
 |---|---|
-| Core logic | mappers and models, services with fake repositories, validators, the pagination window, date formatters |
-| Composables | debounce and out-of-order responses in `useGameSearch`, `useFormSubmit` errors, `useDisclosure` and `Escape` |
-| Components | `GameCard` cover fallback, `StarRatingInput` half stars and keyboard, `AppModal` focus and closing, `LogGameForm` validation and confirmed deletes |
-| Views | every page's loading, empty, error and success states, URL state, role-based UI, the RAWG-to-id redirect |
-| Router and store | guards for guests, users and admins, safe redirects after login, session restore |
+| Lógica del core | mappers y modelos, services con repositories falsos, validadores, la ventana de paginación, formateadores de fechas |
+| Composables | debounce y respuestas desordenadas en `useGameSearch`, errores de `useFormSubmit`, `useDisclosure` y la tecla `Escape` |
+| Componentes | portada alternativa de `GameCard`, medias estrellas y teclado en `StarRatingInput`, foco y cierre de `AppModal`, validación y borrado con confirmación en `LogGameForm` |
+| Vistas | estados de carga, vacío, error y éxito de cada página, estado en la URL, interfaz según el rol, la redirección del id de RAWG al id propio |
+| Router y store | guards para invitados, usuarios y admins, redirecciones seguras tras el login, restauración de la sesión |
 
 ---
 
-## Workflow
+## Metodología de trabajo
 
-- **Branches:** `main` holds the delivered version. `dev` is the integration branch. Each JIRA story is built on its own branch (`feature/FE-205-catalog`, `test/FE-211-coverage-gaps`…) and merged into `dev` with `--no-ff`.
-- **Commits** follow [Conventional Commits](https://www.conventionalcommits.org/).
-- **Planning** in JIRA: the frontend was Sprint 2, stories FE-201 to FE-211.
+- **Ramas:** `main` contiene la versión entregada. `dev` es la rama de integración. Cada historia de JIRA se desarrolla en su propia rama (`feature/FE-205-catalog`, `test/FE-211-coverage-gaps`…) y se fusiona en `dev` con `--no-ff`.
+- **Commits** siguiendo [Conventional Commits](https://www.conventionalcommits.org/).
+- **Planificación** en JIRA: el frontend fue el Sprint 2, historias de FE-201 a FE-211.
 
 ---
 
-Made by **Jose Ángel Peña Díaz** as the final project of the Factoría F5 · P5 Digital Academy full-stack bootcamp. Game data provided by [RAWG](https://rawg.io).
+Hecho por **Jose Ángel Peña Díaz** como proyecto final del bootcamp full-stack de Factoría F5 · P5 Digital Academy. Datos de juegos proporcionados por [RAWG](https://rawg.io).
