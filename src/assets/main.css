@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, sans-serif;
+
+  --color-canvas: #0a0d14;
+  --color-surface: #121620;
+  --color-raised: #1a202c;
+  --color-overlay: #222b3d;
+  --color-line: #283042;
+  --color-line-subtle: #1c2333;
+
+  --color-ink: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-faint: #64748b;
+
+  --color-accent: #10b981;
+  --color-accent-hover: #34d399;
+  --color-info: #06b6d4;
+  --color-star: #f59e0b;
+  --color-danger: #ef4444;
+
+  --radius-card: 1rem;
+  --radius-hero: 1.5rem;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-muted antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+  }
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+@utility btn-primary {
+  @apply btn bg-accent font-bold text-canvas hover:bg-accent-hover hover:shadow-[0_0_14px_rgb(16_185_129/0.4)];
+}
+
+@utility btn-secondary {
+  @apply btn border border-line bg-raised text-ink hover:border-info hover:text-info;
+}
+
+@utility btn-ghost {
+  @apply btn text-muted hover:bg-raised hover:text-ink;
+}
+
+@utility page-button {
+  @apply inline-flex h-9 min-w-9 items-center justify-center rounded-lg border border-line bg-surface px-2.5 text-sm font-semibold text-muted tabular-nums transition hover:border-accent/50 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line disabled:hover:text-muted aria-[current=page]:border-accent aria-[current=page]:bg-accent/15 aria-[current=page]:text-accent;
+}
+
+@utility menu-item {
+  @apply flex items-center gap-3 px-3 py-2 text-left text-sm transition hover:bg-overlay hover:text-ink;
+}
