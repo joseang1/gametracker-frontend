@@ -15,6 +15,12 @@ export default mergeConfig(
         provider: 'v8',
         include: ['src/**/*.{js,vue}'],
         exclude: ['src/main.js'],
+        thresholds: {
+          lines: 90,
+          statements: 90,
+          branches: 85,
+          functions: 85,
+        },
       },
     },
   }),
