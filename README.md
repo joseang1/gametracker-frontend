@@ -7,8 +7,8 @@ Construida con **Vue 3**, **Pinia**, **Vue Router** y **Tailwind CSS**, testeada
 | | |
 |---|---|
 | Repositorio del backend | [joseang1/gametracker-backend](https://github.com/joseang1/gametracker-backend) |
-| Presentación | _enlace pendiente de añadir antes de la entrega_ |
-| Diseño | Maquetas en Figma: _enlace pendiente de añadir antes de la entrega_ |
+| Presentación | [Google Slides](https://docs.google.com/presentation/d/1nwkDyN_02emrODJNp7e_32V8QGGp0NmS/edit?usp=sharing) |
+| Diseño | [Maquetas en Figma](https://www.figma.com/design/IkvVkcKALDrSCblGVOWzj6/Untitled?node-id=0-1) |
 
 ![Página de inicio](docs/screenshots/home.png)
 
